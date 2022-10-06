@@ -31,3 +31,4 @@ for bid in sales["p1"] :
         max_bidder = bid[0]
 
 print(max_bid, max_bidder)
+
