@@ -8,7 +8,7 @@ from flask_cors import CORS
 
 from backend.blockchain.blockchain import Blockchain
 from backend.wallet.wallet import Wallet
-from backend.wallet.transaction import Transaction
+from backend.wallet.transactionLand import Transaction
 from backend.wallet.transaction_pool import TransactionPool
 from backend.pubsub import PubSub
 
@@ -34,6 +34,8 @@ def route_blockchain_mine():
     print(block)
     pubsub.broadcast_block(block)
     transaction_pool.clear_blockchain_transactions(blockchain)
+    # update blockchain and wallet 
+    wallet.update()
     return jsonify(block.to_json())
     
 @app.route('/wallet/transact',methods= ['post'])
@@ -41,19 +43,32 @@ def route_wallet_transact():
     #   {'recipient' :'foo', 'amount' :15}
     #1. get the data from request
     transaction_data = request.get_json()
-    transaction = transaction_pool.existing_transaction(wallet.address)
+    #transaction = transaction_pool.existing_transaction(wallet.address)
 
-    if transaction:
-        transaction.update(
-        wallet,
-        transaction_data['recipient'],
-        transaction_data['amount']
-        )
-    else:
-        transaction = Transaction(
+    #if transaction:
+    #    transaction.update(
+    #    wallet,
+    #    transaction_data['recipient'],
+    #    #transaction_data['amount']
+    #    transaction_data['Land']
+    #    )
+    #else:
+
+    # create a diffrent function for finding the max_bidder
+    max_bid = 0
+    max_bidder = ""
+    for bid in blockchain.sales[transaction_data['Land']] :
+        if(bid[1] >  max_bid )  : 
+            max_bid = bid[1]
+            max_bidder = bid[0]
+
+    print(max_bid, max_bidder)
+
+    transaction = Transaction(
             wallet,
-            transaction_data['recipient'],
-            transaction_data['amount']
+            max_bidder,
+            transaction_data['Land']
+            #transaction_data['amount']
         )
 
     pubsub.broadcast_transaction(transaction)
@@ -70,11 +85,17 @@ def route_wallet_info():
 @app.route('/wallet/addLand',methods= ['post'])
 def wallet_Land_info():
     request_data = request.get_json()
-    print("hello")
+    #add a transaction for adding a land initally 
     wallet.addLand(request_data['name'])
     addr = wallet.address
     blockchain.add_Land(  request_data['name'] ,addr   )
-    return 'sucess'
+    """transaction = Transaction(
+            wallet,
+            wallet.address, # adding to the self
+            request_data['Land']
+        )"""
+    
+    return 'added as a transaction, please wait for the mining to update wallet'
 
 @app.route('/blockchain/land')
 def blockchain_show_land():

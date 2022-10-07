@@ -1,3 +1,10 @@
+"""
+to update the land information with in land attribute 
+inside the blockchain class 
+using chain
+
+"""
+land = {'name' : [] }  # dict  : map  : land - > wallet address
 chain = [
     {
         "data": [],

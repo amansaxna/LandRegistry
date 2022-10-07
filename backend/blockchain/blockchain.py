@@ -14,8 +14,8 @@ class Blockchain:
     def add_block(self, data):
         self.chain.append(Block.mine_block(self.chain[-1], data))
     
-    def add_bidder(self, address, bid_price , land_name ):
-        new_bid = (address,bid_price)
+    def add_bidder(self, bidder_address, bid_price , land_name ):
+        new_bid = (bidder_address,bid_price)
         self.sales[land_name].append(new_bid)
     
     def list_property(self, land_name ):
@@ -23,6 +23,12 @@ class Blockchain:
     
     def add_Land(self, name, address):
         self.land['name'].append([name , address])
+
+    def update(self):
+        """
+        update the land infor in the blockchain
+        """
+        print("code not implemented")
 
     def __repr__(self):
         return f'Blockchain: {self.chain}'

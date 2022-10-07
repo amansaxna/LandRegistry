@@ -27,6 +27,9 @@ class Wallet:
 
     def addLand(self, name):
         self.land.add(name)
+    
+    def update(self):
+        print("code not implemented")
 
     def sign(self,data):
         """

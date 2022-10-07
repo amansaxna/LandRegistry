@@ -7,7 +7,6 @@ from backend.blockchain.blockchain import Blockchain
 from backend.wallet.transaction import Transaction
 from backend.wallet.transaction_pool import TransactionPool
 
-
 pnconfig = PNConfiguration()
 # subscribe_key from admin panel
 pnconfig.subscribe_key = "sub-c-a731cf42-c89c-4871-b5b3-6647ea52b28e"
@@ -16,7 +15,7 @@ pnconfig.publish_key =   "pub-c-318e16e1-6ca3-4623-9862-8f1d2fdd6e0f"
 pnconfig.user_id = "my_custom_user_id"
 pubnub = PubNub(pnconfig)
 
-CHANNELS =  {   'TEST':'TEST',  'BLOCK':'BLOCK' , 'TRANSACTION' : 'TRANSACTION'}
+CHANNELS =  {   'TEST':'TEST',  'BLOCK':'BLOCK' , 'TRANSACTION' : 'TRANSACTION' }
 
 class Listener(SubscribeCallback):
     def __init__(self, blockchain, transaction_pool):
@@ -38,6 +37,11 @@ class Listener(SubscribeCallback):
                 print(f'\n Succesfully replaced the locla chain ')
             except Exception as e:
                 print(f'\n Did not replace :{e}')
+            print("Updating land and wallet")
+            
+            # wallet.update()
+            self.blockchain.update()
+
         elif message_object.channel == CHANNELS['TRANSACTION']:
             transaction = Transaction.from_json(message_object.message)
             self.transaction_pool.set_transaction(transaction)
