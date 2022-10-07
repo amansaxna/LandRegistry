@@ -40,8 +40,7 @@ def route_blockchain_mine():
     
 @app.route('/wallet/transact',methods= ['post'])
 def route_wallet_transact():
-    #   {'recipient' :'foo', 'amount' :15}
-    #1. get the data from request
+    #   {"land" : "land1"} only care s about which land to transact
     transaction_data = request.get_json()
     #transaction = transaction_pool.existing_transaction(wallet.address)
 
@@ -57,7 +56,7 @@ def route_wallet_transact():
     # create a diffrent function for finding the max_bidder
     max_bid = 0
     max_bidder = ""
-    for bid in blockchain.sales[transaction_data['Land']] :
+    for bid in blockchain.sales[transaction_data['land']] :
         if(bid[1] >  max_bid )  : 
             max_bid = bid[1]
             max_bidder = bid[0]
@@ -67,9 +66,11 @@ def route_wallet_transact():
     transaction = Transaction(
             wallet,
             max_bidder,
-            transaction_data['Land']
+            transaction_data['land']
             #transaction_data['amount']
         )
+    
+    #empty the bidding 
 
     pubsub.broadcast_transaction(transaction)
 

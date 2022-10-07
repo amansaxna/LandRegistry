@@ -30,7 +30,9 @@ class Transaction:
         #        raise Exception('Land not owned')
 
         output = {} #dict
-        output[recipient] = land 
+        output["name_owner"] = recipient
+        output["land"] = land
+
         #output[sender_wallet.address] = sender_wallet.balance - amount
 
         print(output)
