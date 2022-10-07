@@ -10,6 +10,7 @@ class Blockchain:
         self.land = {'name' : [] }  # dict  : map  : land - > wallet address  
         self.wallets = {}    # dict : map : address -> name 
         self.sales = {}     # dict : property -> list of bidding  
+        self.stackers = {}
 
     def add_block(self, data):
         self.chain.append(Block.mine_block(self.chain[-1], data))
