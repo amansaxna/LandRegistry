@@ -4,7 +4,14 @@ inside the blockchain class
 using chain
 
 """
-land = {'name' : [] }  # dict  : map  : land - > wallet address
+land = {
+    "name": [
+        [
+            "land1",
+            "f5bc0386"
+        ]
+    ]
+}  # dict  : map  : land - > wallet address
 chain = [
     {
         "data": [],
