@@ -23,12 +23,17 @@ class Blockchain:
         self.sales[land_name] = []
     
     def add_Land(self, name, address):
+        """
+        add land to the blockchain 
+        """
         self.land['name'].append([name , address])
 
     def update(self):
         """
         update the land infor in the blockchain
         """
+        # block = self.chain[-1]
+        
         print("code not implemented")
 
     def __repr__(self):
