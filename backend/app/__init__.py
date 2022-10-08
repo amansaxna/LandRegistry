@@ -38,6 +38,10 @@ def route_blockchain_mine():
     wallet.update()
     return jsonify(block.to_json())
     
+@app.route('/blockchain/land')
+def get_land():
+    return f'Updated Land : { blockchain.land } '
+
 @app.route('/wallet/transact',methods= ['post'])
 def route_wallet_transact():
     #   {"land" : "land1"} only care s about which land to transact
@@ -85,19 +89,21 @@ def route_wallet_info():
     return jsonify({ 'address': wallet.address, 'balance': wallet.balance , 'landOwned' : lands_strings })
 
 @app.route('/wallet/addLand',methods= ['post'])
-def wallet_Land_info():
+def wallet_Land_add():
     request_data = request.get_json()
     #add a transaction for adding a land initally 
-    wallet.addLand(request_data['name'])
+    wallet.addLand(request_data['land'])
     addr = wallet.address
-    blockchain.add_Land(  request_data['name'] ,addr   )
-    """transaction = Transaction(
+    # blockchain.add_Land(  request_data['name'] ,addr   )
+    transaction = Transaction(
             wallet,
             wallet.address, # adding to the self
-            request_data['Land']
-        )"""
+            request_data['land']
+        )
     
-    return f'added as a transaction, please wait for the mining to update wallet \n { blockchain.land }'
+    pubsub.broadcast_transaction(transaction)
+
+    return jsonify(transaction.to_json())
 
 @app.route('/blockchain/land')
 def blockchain_show_land():

@@ -7,7 +7,7 @@ class Blockchain:
     """
     def __init__(self):
         self.chain = [Block.genesis()]
-        self.land = {'name' : [] }  # dict  : map  : land - > wallet address  
+        self.land = {}  # dict  : map  : land - > wallet address  
         self.wallets = {}    # dict : map : address -> name 
         self.sales = {}     # dict : property -> list of bidding  
         self.stackers = {}
@@ -32,9 +32,18 @@ class Blockchain:
         """
         update the land infor in the blockchain
         """
-        # block = self.chain[-1]
+        block = self.chain[-1].to_json()
+        print(f'block - > {type(block)}')
+        data =  block.get("data")
+        for trnx in data:
+            landName = trnx["output"]["land"]
+            landOwner = trnx["output"]["name_owner"] 
+            if self.land.get(landName)==None :
+                self.land[landName] = landOwner
+            else: #if land already present update ownership
+                self.land.update({landName : landOwner})
         
-        print("code not implemented")
+        
 
     def __repr__(self):
         return f'Blockchain: {self.chain}'
