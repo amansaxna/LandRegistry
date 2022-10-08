@@ -5,13 +5,9 @@ using chain
 
 """
 land = {
-    "name": [
-        [
-            "land1",
-            "f5bc0386"
-        ]
-    ]
-}  # dict  : map  : land - > wallet address
+     "land1" : "f5bc0386"
+} 
+ # dict  : map  : land - > wallet address
 block = {
     "data": [
         {
