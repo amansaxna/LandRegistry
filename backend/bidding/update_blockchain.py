@@ -4,6 +4,10 @@ inside the blockchain class
 using chain
 
 """
+from pickle import NONE
+import pprint
+import string
+import json
 land = {
      "land1" : "f5bc0386"
 } 
@@ -24,7 +28,7 @@ block = {
             },
             "output": {
                 "land": "land2",
-                "name_owner": "5d853afc"
+                "name_owner": "aman"
             }
         },
         {
@@ -41,7 +45,7 @@ block = {
             },
             "output": {
                 "land": "land1",
-                "name_owner": "5d853afc"
+                "name_owner": "chirag"
             }
         },
         {
@@ -69,5 +73,23 @@ block = {
     "timestamp": 1665189057.95266
 }
 
-print(block)
+#val_list1 = []
+#for needed_val1 in block:
+ #   val_list1.append(block.get(["output"]["land"]))
+#print(val_list1)
+data =  block.get('data')
+print(type(data[0]))
+for trnx in data:
+    landName = trnx["output"]["land"]
+    landOwner = trnx["output"]["name_owner"] 
+    if land.get(landName)==None :
+        land[landName] = landOwner
+    else: #if land already present update ownership
+        land.update({landName : landOwner})
+    #print(trnx)
+
+
+print(land)
+#ans1 = ans.get("output")
+#print(ans1)
 
