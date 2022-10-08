@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\Hp\OneDrive - hyderabad.bits-pilani.ac.in\Desktop\Blockchain\Ass1\env
+set VIRTUAL_ENV=E:\17-9 Desktop Data\BITS ME CSE\SEM-3\1 BLKCHN\Project1\LandRegistry\env
 
 if not defined PROMPT set PROMPT=$P$G
 

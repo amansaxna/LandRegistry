@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Hp\OneDrive - hyderabad.bits-pilani.ac.in\Desktop\Blockchain\Ass1\env"
+VIRTUAL_ENV="E:\17-9 Desktop Data\BITS ME CSE\SEM-3\1 BLKCHN\Project1\LandRegistry\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
