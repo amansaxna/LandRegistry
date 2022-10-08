@@ -2,6 +2,7 @@ import time
 import datetime
 
 from backend.util.crypto_hash import crypto_hash
+from backend.util.crypto_hash import merkle_root
 from backend.util.hex_to_binary import hex_to_binary
 from backend.config import MINE_RATE
 
@@ -57,13 +58,13 @@ class Block:
         last_hash = last_block.hash
         difficulty = Block.adjust_difficulty(last_block, timestamp)
         nonce = 0
-        hash = crypto_hash(timestamp, last_hash, data, difficulty, nonce)
+        hash = crypto_hash(timestamp, last_hash, merkle_root(data) , difficulty, nonce)
 
         while hex_to_binary(hash)[0:difficulty] != '0' * difficulty:
             nonce += 1
             timestamp = time.time()
             difficulty = Block.adjust_difficulty(last_block, timestamp)
-            hash = crypto_hash(timestamp, last_hash, data, difficulty, nonce)       
+            hash = crypto_hash(timestamp, last_hash, merkle_root(data) , difficulty, nonce)       
 
         return Block(timestamp, last_hash, hash, data, difficulty, nonce)
 
