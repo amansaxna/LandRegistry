@@ -71,6 +71,7 @@ def route_wallet_transact():
         )
     
     #empty the bidding 
+    del blockchain.sales[transaction_data['land']]
 
     pubsub.broadcast_transaction(transaction)
 
@@ -96,20 +97,23 @@ def wallet_Land_info():
             request_data['Land']
         )"""
     
-    return 'added as a transaction, please wait for the mining to update wallet'
+    return f'added as a transaction, please wait for the mining to update wallet \n { blockchain.land }'
 
 @app.route('/blockchain/land')
 def blockchain_show_land():
+    """
+    list all the land registerd in the blockchain
+    """
     return jsonify(blockchain.land)
 
 @app.route('/list' , methods= ['post'])
 def blockchain_list_land():
     """
-        list an land for sales
+        list a land for sales
     """
     transaction_data = request.get_json()
     blockchain.list_property( transaction_data['land_name'] )
-    return 'success'
+    return f'Sales on for : { blockchain.sales}'
 
 @app.route('/bid', methods= ['post'])
 def list_add2auction():
@@ -119,7 +123,8 @@ def list_add2auction():
     transaction_data = request.get_json()
     blockchain.add_bidder( wallet.address, transaction_data['bid_price'] 
                             , transaction_data['land_name'] )
-    return 'success'
+    land_name = transaction_data['land_name']
+    return f'Bid successfully for {land_name } : { blockchain.sales[ land_name ] }'
 
 @app.route('/showList')
 def show_list():

@@ -26,6 +26,9 @@ class Wallet:
         self.serialize_public_key()
 
     def addLand(self, name):
+        """
+        add land to the wallet
+        """
         self.land.add(name)
     
     def update(self):
