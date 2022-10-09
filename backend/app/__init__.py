@@ -146,6 +146,15 @@ def show_TP():
     """
     return jsonify(transaction_pool.transaction_data())
 
+@app.route('/blockchain/history', methods= ['post'])
+def history():
+    """
+        list the history of a land
+    """
+    transaction_data = request.get_json()
+    history = blockchain.get_history(transaction_data["land"])
+    return history
+
 
 ROOT_PORT = 5000
 PORT = ROOT_PORT

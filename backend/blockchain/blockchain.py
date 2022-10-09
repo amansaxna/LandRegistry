@@ -27,6 +27,31 @@ class Blockchain:
         add land to the blockchain 
         """
         self.land['name'].append([name , address])
+    
+    def get_history(self,land) :
+        """
+        retrurns a list containing a history of a land
+        """
+        # iterate through the chain ,
+            #   if land_name : land1 => add it to the history list
+            # this history land will show the land ownership as it passes through different users
+
+        history = list()    # history for a land
+
+        for iter_block in self.chain :    # chain -> list[ Block objects ]
+            # convert block objects into serialized dict 
+            iter_block = Block.to_json(iter_block) #=> converted into dict
+            if len(iter_block["data"]) == 0 :   # genesis block / block with 0 tranxs
+                continue
+            # each block's data contains multiple tranxs
+            for trnx in iter_block["data"] :
+                print( type(trnx) )
+                if trnx["output"]["land"] == land :     # this trnx contains info abt land1
+                    history.append(trnx["output"]["name_owner"])
+
+        print(history)  
+        return history      
+
 
     def update(self):
         """
