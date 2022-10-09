@@ -249,10 +249,14 @@ class Blockchain(object):
 
         self.tempBlocks.append(self.myCurrBlock)
         self.validators.add(self.myCurrBlock["Validator"])
-        for validator in self.validators:
-            acct = validator.rsplit(sep=", ")
-            acct.append(int(acct[1]) * int(acct[2]))
-            if winner and acct[-1]:
+
+        print(f' {type(self.validators)} {self.validators}') # {'Aman, 50, 0', 'Manas, 43, 0', 'Chirag, 55, 0'}
+
+        for validator in self.validators:           # 'Aman, 50, 0'
+            acct = validator.rsplit(sep=", ")       # string -> list
+            print(f' {acct} {int(acct[1])} * {acct[2]} ')
+            acct.append(int(acct[1]) * int(acct[2]))       # 50 * 0 = land * age
+            if winner and acct[-1]:                 # list winner & age 
                 winner = acct if winner[-1] < acct[-1] else winner
             else:
                 winner = acct if acct[-1] else winner

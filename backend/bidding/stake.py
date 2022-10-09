@@ -4,6 +4,9 @@ way 2 : go though the tranx_pool and knw who is the max_staker for that set of t
 
 """
 #way 1 ->
+from wsgiref.validate import validator
+
+
 stackers = {  
                 "aman"  : 1 ,
                 "manas" : 2 ,
@@ -137,3 +140,39 @@ if max_stacker != address :
     print("aman can't do the mining")
 else :
     print("  mining done")
+
+
+# way 3
+
+validators = ("Aman", "chirag", "Manas", "sahitya")
+
+def pick_winner(self):
+        """Creates a lottery pool of validators and choose the validator
+        who gets to forge the next block. Random selection Landed by amount of token staked
+        Do this every 30 seconds
+        """
+        winner = []
+
+        self.tempBlocks.append(self.myCurrBlock)
+        self.validators.add(self.myCurrBlock["Validator"])
+        for validator in self.validators:
+            acct = validator.rsplit(sep=", ")
+            acct.append(int(acct[1]) * int(acct[2]))
+            if winner and acct[-1]:
+                winner = acct if winner[-1] < acct[-1] else winner
+            else:
+                winner = acct if acct[-1] else winner
+        if winner:
+            return winner
+        for validator in self.validators:
+            acct = validator.rsplit(sep=", ")
+            acct.append((int(acct[1]) + int(acct[2])) / len(acct[0]))
+            if winner:
+                winner = acct if winner[-1] < acct[-1] else winner
+            else:
+                winner = acct
+        return winner
+
+        
+
+pick_winner()
