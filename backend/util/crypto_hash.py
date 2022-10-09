@@ -18,7 +18,13 @@ def merkle_root(data):
 
     #taking pair from list1 hashing it and adding it to list2
         #if list1.size() == 1 then create pair with same txn
-    list1 = data 
+    list1 = list()
+    for tranx in data :
+        list1.append(tranx) 
+
+    print(type(list1))
+    print(type( json.dumps(list1[0]) ))
+
 
     while (len(list1) != 1):
         if(len(list1) % 2 !=0): #odd length
@@ -26,7 +32,7 @@ def merkle_root(data):
         # pprint(list1)
         for i in range(int(len(list1)/2)):
             # print(i)
-            pair = list1[0] +  list1[1]
+            pair = json.dumps(list1[0]) +  json.dumps(list1[1])
             # print(f'st1 : {list1[0]} + str 2 : {list1[1]}')
             hash = crypto_hash(pair)
             list1.append(hash)

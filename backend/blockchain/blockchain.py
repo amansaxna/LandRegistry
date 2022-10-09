@@ -33,7 +33,7 @@ class Blockchain:
         update the land infor in the blockchain
         """
         block = self.chain[-1].to_json()
-        print(f'block - > {type(block)}')
+        print(f'block - > {type(block)} => \n \n {block}')
         data =  block.get("data")
         for trnx in data:
             landName = trnx["output"]["land"]
