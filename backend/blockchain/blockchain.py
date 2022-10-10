@@ -68,7 +68,50 @@ class Blockchain:
             else: #if land already present update ownership
                 self.land.update({landName : landOwner})
         
-        
+    def get_Winner(self):
+        """
+        Get the max POS person 
+        New algo : 
+            minner : oldest and has majority stake in it
+
+        # define coin age -> 
+        # coin_age -> list
+            # iteretae through chain, 
+            # if( address not in coin_age : add it
+            # else do nothing
+        """
+
+        count = dict() 
+
+        for iter_block in self.chain :    # chain -> list[ Block objects ]
+            # convert block objects into serialized dict 
+            # block.to_json(iter_block) => converted into dict
+            if len(iter_block["data"]) == 0 :   # genesis block / block with 0 tranxs
+                continue
+            # each block's data contains multiple tranxs
+            for trnx in iter_block["data"] :
+                name_owner = trnx["output"]["name_owner"]
+                
+                # if name_owner not in coin_age : # address not present
+                #     coin_age.append( name_owner )
+
+                if count.get( name_owner ) == None :
+                    count[ name_owner ] = 1
+                else :
+                    count[ name_owner ] += 1
+ 
+        print(count)
+        print(coin_age)
+
+    def max_stacker(count):
+        max_stacker = ""
+        max_stake = 0
+        for pair in count :
+            if max_stake < count[pair] :
+                max_stake = count[pair] 
+                max_stacker = pair
+        return max_stacker
+
 
     def __repr__(self):
         return f'Blockchain: {self.chain}'

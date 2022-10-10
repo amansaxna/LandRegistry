@@ -141,7 +141,6 @@ for iter_block in chain :    # chain -> list[ Block objects ]
             count[ name_owner ] += 1
 
 
-address_minning_request = "aman"
 
 print(count)
 print(coin_age)
