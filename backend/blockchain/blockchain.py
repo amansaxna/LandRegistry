@@ -14,6 +14,10 @@ class Blockchain:
 
     def add_block(self, data):
         self.chain.append(Block.mine_block(self.chain[-1], data))
+
+    def add_block_pos(self, data):
+        winner = self.get_Winner()
+        self.chain.append(Block.mine_block_pos(self.chain[-1], data, winner ))
     
     def add_bidder(self, bidder_address, bid_price , land_name ):
         new_bid = (bidder_address,bid_price)
@@ -85,7 +89,7 @@ class Blockchain:
 
         for iter_block in self.chain :    # chain -> list[ Block objects ]
             # convert block objects into serialized dict 
-            # block.to_json(iter_block) => converted into dict
+            iter_block = Block.to_json(iter_block) # => converted into dict
             if len(iter_block["data"]) == 0 :   # genesis block / block with 0 tranxs
                 continue
             # each block's data contains multiple tranxs
@@ -101,15 +105,18 @@ class Blockchain:
                     count[ name_owner ] += 1
  
         print(count)
-        print(coin_age)
 
-    def max_stacker(count):
+        return self.max_stacker(count)
+
+    def max_stacker(self, count ):
         max_stacker = ""
         max_stake = 0
         for pair in count :
             if max_stake < count[pair] :
                 max_stake = count[pair] 
                 max_stacker = pair
+        
+        print(f'  \n  ================== {max_stacker} {max_stake}')
         return max_stacker
 
 

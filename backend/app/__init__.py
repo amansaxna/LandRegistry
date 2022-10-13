@@ -29,7 +29,7 @@ def route_blockchain():
 
 @app.route('/blockchain/mine')
 def route_blockchain_mine():
-    blockchain.add_block(transaction_pool.transaction_data())
+    blockchain.add_block_pos(transaction_pool.transaction_data())
     block = blockchain.chain[-1]
     print(block)
     pubsub.broadcast_block(block)

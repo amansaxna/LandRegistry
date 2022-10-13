@@ -1,6 +1,8 @@
 import time
 import datetime
 
+#from backend.blockchain.blockchain import Blockchain
+
 from backend.util.crypto_hash import crypto_hash
 from backend.util.crypto_hash import merkle_root
 from backend.util.hex_to_binary import hex_to_binary
@@ -67,6 +69,36 @@ class Block:
             hash = crypto_hash(timestamp, last_hash, merkle_root(data) , difficulty, nonce)       
 
         return Block(timestamp, last_hash, hash, data, difficulty, nonce)
+
+    def pickMinter(self):
+        """
+        Pick the winner 
+        """
+        pass
+
+    @staticmethod
+    def mine_block_pos(last_block, data, winner):
+        """
+        Mine a block based on the given last_block and data, Allow the block to be,
+        minted by the wallet having max stake.
+        DEFINE MAX_STAKE : ???
+        """
+        timestamp = time.time()
+        last_hash = last_block.hash
+        difficulty = Block.adjust_difficulty(last_block, timestamp)
+        nonce = 0
+        hash = crypto_hash(timestamp, last_hash, merkle_root(data) , difficulty, nonce)
+
+        """
+        pick the minner/ minter 
+        check if the current wallet can mine or not...
+        if thge current_wallet is max_stacker , allow , else do not 
+        """
+
+        print(f' \n  winner is { winner }.. ')
+
+        return Block(timestamp, last_hash, hash, data, difficulty, nonce)
+
 
     @staticmethod
     def genesis():
