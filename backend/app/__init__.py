@@ -127,7 +127,7 @@ def list_add2auction():
         bid for a land for sales
     """
     transaction_data = request.get_json()
-    blockchain.add_bidder( wallet.address, transaction_data['bid_price'] 
+    blockchain.add_bidder( transaction_data['bidder'], transaction_data['bid_price'] 
                             , transaction_data['land_name'] )
     land_name = transaction_data['land_name']
     return f'Bid successfully for {land_name } : { blockchain.sales[ land_name ] }'
